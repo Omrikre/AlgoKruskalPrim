@@ -24,7 +24,9 @@ class Graph {
 public:
     Graph() {}
     void addEdge(int src,int dest,int weight);
-    List getAdjList(int src);
+    
+    int getSize() { return size; }
+    void removeEdge(int src, int dest);
 
     //inner class List
     class List{
@@ -32,8 +34,11 @@ public:
         List(){
             head= nullptr;
             tail= nullptr;
+            size = 0;
         }
         void addEdge(int dest,int weight);
+        void removeEdge(int dest);
+        int getSize() { return size; };
         //inner class Node
         class Node{
         private:
@@ -50,11 +55,14 @@ public:
             void setWeight(int w){weight=w;}
             //need distructor?
         };
+        Node* getHead() {
+            return head;
+        }
        //end of inner class node
     private:
         Node *head;
         Node *tail;
-
+        int size;
     };
     //end of inner class List
 private:
@@ -66,7 +74,8 @@ private:
     void setArray();
 public:
     void getDataFromFile(string fileName);
-
+    List getAdjList(int src);
+    
 };
 
 

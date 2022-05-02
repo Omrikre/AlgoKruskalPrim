@@ -4,16 +4,17 @@
 
 #ifndef UNTITLED_PRIM_H
 #define UNTITLED_PRIM_H
+#include "Graph.h"
+#include "MinHeap.h"
 
 using namespace std;
-#include <bits/stdc++.h>
+
 
 
 class Prim {
-
-    int minKey(int *key, bool *mstSet);
-    void printMST(int parent[], int graph[][]);
-    void primMST(int graph[][]);
+    int primCalc(Graph g);
+    
+    
 };
 
 

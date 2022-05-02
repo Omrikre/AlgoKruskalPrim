@@ -6,6 +6,7 @@
 
 void Graph::addEdge(int src, int dest, int weight) {
     arr[src].addEdge(dest,weight);
+    arr[dest].addEdge(src, weight);
 }
 void Graph::List::addEdge(int dest, int weight) {
     Node *n = new Node(dest,weight);
@@ -16,9 +17,35 @@ void Graph::List::addEdge(int dest, int weight) {
     else{
         tail->setNext(n);
     }
+    size++;
 }
 Graph::List Graph::getAdjList(int src) {
     return arr[src];
+}
+void Graph::removeEdge(int src, int dest) {
+    arr[src].removeEdge(dest);
+    arr[dest].removeEdge(src);
+
+}
+void Graph::List::removeEdge(int dest){
+    Node* n =head;
+    Node* pre = nullptr;
+    while (n != nullptr) {
+        if (n->getDest()== dest) {
+            if (pre==nullptr){
+                head = n->getNext();
+            }
+            if (n == tail) {
+                tail = pre;
+            }
+            else {
+                pre->setNext(n->getNext());
+            }
+        }
+        pre = n;
+        n = n->getNext();
+    }
+    size--;
 }
 void Graph::getDataFromFile(string fileName) {
     ifstream  dataFile;
@@ -113,3 +140,5 @@ void Graph::quickSort(int arr[], int start, int end) {
     // Sorting the right part
     quickSort(arr, p + 1, end);
 }
+
+
