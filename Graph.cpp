@@ -3,23 +3,103 @@
 //
 
 #include "Graph.h"
+Graph::Graph() {}
+
+void Graph::getDataFromFile(string fileName) {
+    ifstream  dataFile;
+    float vertNum, edgeNum;
+    int edgeWeight, fromVert, toVert;
+    string tempLine;
+
+    //TODO - change default location to the "file name"
+
+    dataFile.open("C:\\Users\\Omrik\\Desktop\\text.txt");
+    dataFile >> vertNum;
+    dataFile >> edgeNum;
+
+    if((vertNum < 1 || edgeNum < 1)) {
+        cout << endl << "Invalid input" << endl << endl;
+        exit(1);
+    }
+
+    // set vertices and edges sizes
+    this->vertSize = (int)vertNum;
+    this->edgeSize = (int)edgeNum;
+
+    makeEmptyGraph(vertSize);
+
+    //TODO remove the prints
+    // print check
+    cout << "Num of verts: " << vertNum << endl;
+    cout << "Num of edges: " << edgeNum << endl << endl;
+    cout << "Edges:" << endl;
+
+    for (int i = 0; i < (int)edgeNum; ++i) {
+        dataFile >> tempLine;
+        sscanf(tempLine.c_str(), "%d %d %d", &fromVert, &toVert, &edgeWeight);
+        if(fromVert<0 || fromVert>vertSize || toVert<0 || toVert>vertSize) {
+            cout << endl << "Invalid input" << endl << endl;
+            exit(1);
+        }
+        //TODO remove
+        cout << "from - " << fromVert << " to - " << toVert << " weight - " << edgeWeight << endl;
+
+        addEdge(fromVert, toVert, edgeWeight);
+    }
+    dataFile >> tempLine;
+    sscanf(tempLine.c_str(), "%d %d", &fromVert, &toVert);
+    this->edgeToRemove = new Edge(fromVert, toVert, 0);
+    dataFile.close();
+}
+
+void Graph::makeEmptyGraph(int vertSize) {
+   this->vertArr = new Vert[vertSize];
+    for (int i = 1; i <= vertSize; ++i) {
+        this->vertArr[i].setVertName(i);
+        this->vertArr[i].setEdgeList();
+    }
+}
+
+void Graph::addEdge(int src, int dest, int weight) {
+    Edge* newEdge = new Edge(src, dest, weight);
+    this->vertArr[src-1].addEdgeToList(newEdge);
+}
+
+Edge* Graph::getAdjList(int vertName) {
+    if (vertName>vertSize || vertName<1) {
+        cout << endl << "Invalid input" << endl << endl;
+        return nullptr;
+    }
+    return vertArr[vertName-1].getEdgeList();
+}
+
+void Graph::removeEdge(int src, int dest) {
+    if (src>vertSize || src<1 || dest>vertSize || dest<1) {
+        cout << endl << "Invalid input" << endl << endl;
+        return;
+    }
+    Edge* tempEdge = vertArr[src-1].getEdgeList();
+    while(tempEdge != nullptr)
+        if(tempEdge->getDest() == dest)
+}
+
+
+
+
+
+
+
+
+
+
 
 
 int Graph::getVertSize() const { return vertSize; }
 int Graph::getEdgeSize() const { return edgeSize; }
 Edge *Graph::getEdges() const { return edges; }
 
-Graph::Graph(int vertSize, int edgeSize) {
-    this->edgeSize = edgeSize;
-    this->vertSize = vertSize;
-    this->edges =
-}
 
-void Graph::addEdge(int src, int dest, int weight) {
-    Edge *newEdge = new Edge(src, dest, weight);
-    E
 
-}
 
 
 
@@ -113,42 +193,6 @@ void Graph::List::removeEdge(int dest){
         n = n->getNext();
     }
 }
-void Graph::getDataFromFile(string fileName) {
-    ifstream  dataFile;
-    float vertNum, edgeNum;
-    int edgeWeight, fromVert, toVert;
-    string tempLine;
-
-    dataFile.open("C:\\Users\\Omrik\\Desktop\\text.txt");
-    dataFile >> vertNum;
-    dataFile >> edgeNum;
-
-    if(vertNum < 1 || edgeNum < 1) {
-        cout << endl << "Invalid input" << endl << endl;
-        exit(1);
-    }
-
-    this->size = (int)vertNum;
-    this->edgeSize = (int)edgeNum;
-
-    setArray();
-
-    //  print check
-    cout << "Num of verts: " << vertNum << endl;
-    cout << "Num of edges: " << edgeNum << endl << endl;
-    cout << "Edges:" << endl;
-
-    for (int i = 0; i < (int)edgeNum; ++i) {
-        dataFile >> tempLine;
-        sscanf(tempLine.c_str(), "%d %d %d", &fromVert, &toVert, &edgeWeight);
-        if(edgeWeight<0) {
-            cout << endl << "Invalid input" << endl << endl;
-            exit(1);
-        }
-        cout << "from - " << fromVert << " to - " << toVert << " weight - " << edgeWeight << endl;
-    }
-    dataFile.close();
-}
 
 void Graph::checkIfVertInGraph() {
 
@@ -157,7 +201,6 @@ void Graph::checkIfVertInGraph() {
 void Graph::setArray() {
     this->arr = new List[this->size];
 }
-
 
 
 

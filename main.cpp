@@ -7,7 +7,7 @@ int main(int argc, char *argv[]) {
     Graph graph;
     graph.getDataFromFile(argv[1]);
 
-    // run kroskel
+    // run kruskel
     // run 
 }
 

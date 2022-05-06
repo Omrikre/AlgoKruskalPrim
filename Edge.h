@@ -8,15 +8,22 @@
 class Edge {
 private:
     // members:
-    int source, dest, weight;
+    int sourceEdge, destEdge, weight;
+    Edge* nextEdge;
 public:
     // ctor:
-    Edge(int source, int dest, int weight) : source(source), dest(dest), weight(weight) {}
+    Edge(int source, int dest, int weight) : sourceEdge(sourceEdge), destEdge(dest), weight(weight) {
+        nextEdge = nullptr;
+    }
 
     // getters:
-    int getSource() const { return source; }
-    int getDest() const { return dest; }
+    int getSource() const { return sourceEdge; }
+    int getDest() const { return destEdge; }
     int getWeight() const { return weight; }
+    Edge* getNextEdge() { return nextEdge; }
+
+    // setters:
+    void setNextEdge(Edge* next) { this->nextEdge = next; }
 
 };
 

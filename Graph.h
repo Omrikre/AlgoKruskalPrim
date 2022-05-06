@@ -7,30 +7,31 @@
 
 #include <iostream>
 #include <fstream>
-#include "Edge.h"
+#include "Vert.h"
+
 using namespace std;
 
 class Graph {
-    // methods:
-public:
+public: // methods:
     Graph();
-    int getVertSize() const;
-    int getEdgeSize() const;
-    Edge *getEdges() const;
-
+    void getDataFromFile(string fileName);
+    void makeEmptyGraph(int vertSize);
     void addEdge(int src, int dest, int weight);
-    void removeEdge(int src, int dest);
+    Edge* getAdjList(int vertName);
 
+
+
+    void removeEdge(int src, int dest);
     bool isCycle(Graph *graph);
 
 private:
     void checkIfVertInGraph();
     void setArray();
 
-    // members:
-private:
+private: // members:
     int vertSize, edgeSize;
-    Edge *edges;
+    Vert* vertArr;
+    Edge* edgeToRemove;
 
 
 };
