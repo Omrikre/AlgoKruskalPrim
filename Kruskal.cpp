@@ -4,6 +4,10 @@
 
 #include "Kruskal.h"
 
+int Kruskal::calcMin() {
+
+}
+
 int Kruskal::kruskalMST()
 {
     int mst_wt = 0; // Initialize result

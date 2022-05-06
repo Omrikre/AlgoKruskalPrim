@@ -4,9 +4,52 @@
 
 #include "Graph.h"
 
+
+int Graph::getVertSize() const { return vertSize; }
+int Graph::getEdgeSize() const { return edgeSize; }
+Edge *Graph::getEdges() const { return edges; }
+
+Graph::Graph(int vertSize, int edgeSize) {
+    this->edgeSize = edgeSize;
+    this->vertSize = vertSize;
+    this->edges =
+}
+
 void Graph::addEdge(int src, int dest, int weight) {
-    arr[src].addEdge(dest,weight);
-    arr[dest].addEdge(src, weight);
+    Edge *newEdge = new Edge(src, dest, weight);
+    E
+
+}
+
+
+
+
+
+
+
+
+
+
+int isCycle() {
+    // Allocate memory for creating V subsets
+    int* parent = new int[graph->V * sizeof(int)];
+
+    // Initialize all subsets as single element sets
+    memset(parent, -1, sizeof(int) * graph->V);
+
+    // Iterate through all edges of graph, find subset of
+    // both vertices of every edge, if both subsets are
+    // same, then there is cycle in graph.
+    for (int i = 0; i < graph->E; ++i) {
+        int x = find(parent, graph->edge[i].src);
+        int y = find(parent, graph->edge[i].dest);
+
+        if (x == y)
+            return 1;
+
+        Union(parent, x, y);
+    }
+    return 0;
 }
 void Graph::List::addEdge(int dest, int weight) {
     Node *n = new Node(dest,weight);
@@ -46,6 +89,29 @@ void Graph::List::removeEdge(int dest){
         n = n->getNext();
     }
     size--;
+}
+void Graph::removeEdge(int src, int dest) {
+    arr[src].removeEdge(dest);
+    arr[dest].removeEdge(src);
+}
+void Graph::List::removeEdge(int dest){
+    Node* n =head;
+    Node* pre = nullptr;
+    while (n != nullptr) {
+        if (n->getDest()== dest) {
+            if (pre==nullptr){
+                head = n->getNext();
+            }
+            if (n == tail) {
+                tail = pre;
+            }
+            else {
+                pre->setNext(n->getNext());
+            }
+        }
+        pre = n;
+        n = n->getNext();
+    }
 }
 void Graph::getDataFromFile(string fileName) {
     ifstream  dataFile;
@@ -91,6 +157,9 @@ void Graph::checkIfVertInGraph() {
 void Graph::setArray() {
     this->arr = new List[this->size];
 }
+
+
+
 
 int Graph::partition(int arr[], int start, int end) {
     int pivot = arr[start];
@@ -140,5 +209,14 @@ void Graph::quickSort(int arr[], int start, int end) {
     // Sorting the right part
     quickSort(arr, p + 1, end);
 }
+
+ /*
+  * void Graph::addEdge(int src, int dest, int weight) {
+    arr[src].addEdge(dest,weight);
+    arr[dest].addEdge(src, weight);
+}
+  */
+
+
 
 

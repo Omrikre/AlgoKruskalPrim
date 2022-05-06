@@ -7,28 +7,40 @@
 
 #include <iostream>
 #include <fstream>
-#include "Graph.h"
+#include "Edge.h"
 using namespace std;
+
+class Graph {
+    // methods:
+public:
+    Graph();
+    int getVertSize() const;
+    int getEdgeSize() const;
+    Edge *getEdges() const;
+
+    void addEdge(int src, int dest, int weight);
+    void removeEdge(int src, int dest);
+
+    bool isCycle(Graph *graph);
+
+private:
+    void checkIfVertInGraph();
+    void setArray();
+
+    // members:
+private:
+    int vertSize, edgeSize;
+    Edge *edges;
+
+
+};
 
 
 /*
- * (n(MakeEmptyGraph – יצירת גרף ריק מקשתות עם n קדקודים.
-(v,u(IsAdjacent – מחזיר כן אם הקשת (v,u (שייכת לגרף, ואחרת לא.
-(u(GetAdjList – החזרת רשימה מקושרת של השכנים של קדקוד u.
-.c משקל בעלת) u,v) קשת הוספת – AddEdge(u,v,c)
-.מהגרף) u,v) הקשת הסרת – RemoveEdge(u,v)
- */
+    List* arr;
 
-
-class Graph {
+    // inner class List:
 public:
-    Graph() {}
-    void addEdge(int src,int dest,int weight);
-    
-    int getSize() { return size; }
-    void removeEdge(int src, int dest);
-
-    //inner class List
     class List{
     public:
         List(){
@@ -64,14 +76,12 @@ public:
         Node *tail;
         int size;
     };
-    //end of inner class List
-private:
-    int size, edgeSize;
-    List* arr;
 
-    void addEdge(int src, int dest, int weight);
-    void checkIfVertInGraph();
-    void setArray();
+
+
+
+
+
 public:
     void getDataFromFile(string fileName);
     List getAdjList(int src);
@@ -80,3 +90,4 @@ public:
 
 
 #endif //UNTITLED_GRAPH_H
+*/
