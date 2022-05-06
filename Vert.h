@@ -11,6 +11,7 @@ class Vert {
 public:
     void setVertName(int i) { this->vertName = i; }
     void setEdgeList() { this->edgeList = nullptr; }
+    void setEdgeList(Edge* edgeList) { this->edgeList = edgeList; }
 
     int getVertName() const { return vertName; }
     Edge *getEdgeList() const { return edgeList; }

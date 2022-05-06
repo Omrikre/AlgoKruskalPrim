@@ -78,9 +78,46 @@ void Graph::removeEdge(int src, int dest) {
         cout << endl << "Invalid input" << endl << endl;
         return;
     }
-    Edge* tempEdge = vertArr[src-1].getEdgeList();
-    while(tempEdge != nullptr)
-        if(tempEdge->getDest() == dest)
+
+    Edge* currEdge = vertArr[src - 1].getEdgeList();
+    Edge* prevEdge = nullptr;
+    bool edgeFound = false;
+
+    while(!edgeFound) {
+        if (currEdge != nullptr) {
+            if (currEdge->getDest() == dest)
+                edgeFound = true;
+            else
+                prevEdge = currEdge;
+                currEdge = currEdge->getNextEdge();
+        }
+        else {
+            cout << "Edge to remove doesnt exist" << endl;
+            return;
+        }
+    }
+    if (prevEdge == nullptr) {
+        vertArr[src-1].setEdgeList(currEdge->getNextEdge());
+        free(currEdge);
+    }
+    else {
+        prevEdge->setNextEdge(currEdge->getNextEdge());
+        free(currEdge);
+    }
+
+}
+
+bool Graph::isAdjacent(int src, int dest) {
+    Edge* currEdge = vertArr[src - 1].getEdgeList();
+    bool edgeFound = false;
+
+    while(currEdge != nullptr) {
+        if (currEdge->getDest() == dest)
+            return true;
+        else
+            currEdge = currEdge->getNextEdge();
+    }
+    return false;
 }
 
 
