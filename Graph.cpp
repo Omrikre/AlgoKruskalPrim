@@ -45,6 +45,7 @@ void Graph::getDataFromFile(string fileName) {
         cout << "from - " << fromVert << " to - " << toVert << " weight - " << edgeWeight << endl;
 
         addEdge(fromVert, toVert, edgeWeight);
+        addEdge(toVert, fromVert, edgeWeight);
     }
     dataFile >> tempLine;
     sscanf(tempLine.c_str(), "%d %d", &fromVert, &toVert);
@@ -105,11 +106,37 @@ void Graph::removeEdge(int src, int dest) {
         free(currEdge);
     }
 
+    // delete other side
+
+    currEdge = vertArr[dest - 1].getEdgeList();
+    prevEdge = nullptr;
+    edgeFound = false;
+
+    while(!edgeFound) {
+        if (currEdge != nullptr) {
+            if (currEdge->getDest() == src)
+                edgeFound = true;
+            else
+                prevEdge = currEdge;
+            currEdge = currEdge->getNextEdge();
+        }
+        else {
+            cout << "Edge to remove doesnt exist" << endl;
+            return;
+        }
+    }
+    if (prevEdge == nullptr) {
+        vertArr[dest-1].setEdgeList(currEdge->getNextEdge());
+        free(currEdge);
+    }
+    else {
+        prevEdge->setNextEdge(currEdge->getNextEdge());
+        free(currEdge);
+    }
 }
 
 bool Graph::isAdjacent(int src, int dest) {
     Edge* currEdge = vertArr[src - 1].getEdgeList();
-    bool edgeFound = false;
 
     while(currEdge != nullptr) {
         if (currEdge->getDest() == dest)
@@ -120,20 +147,9 @@ bool Graph::isAdjacent(int src, int dest) {
     return false;
 }
 
-
-
-
-
-
-
-
-
-
-
-
 int Graph::getVertSize() const { return vertSize; }
+
 int Graph::getEdgeSize() const { return edgeSize; }
-Edge *Graph::getEdges() const { return edges; }
 
 
 
@@ -146,7 +162,7 @@ Edge *Graph::getEdges() const { return edges; }
 
 
 
-
+/*
 int isCycle() {
     // Allocate memory for creating V subsets
     int* parent = new int[graph->V * sizeof(int)];
@@ -230,17 +246,6 @@ void Graph::List::removeEdge(int dest){
         n = n->getNext();
     }
 }
-
-void Graph::checkIfVertInGraph() {
-
-}
-
-void Graph::setArray() {
-    this->arr = new List[this->size];
-}
-
-
-
 int Graph::partition(int arr[], int start, int end) {
     int pivot = arr[start];
 
@@ -274,7 +279,6 @@ int Graph::partition(int arr[], int start, int end) {
 
     return pivotIndex;
 }
-
 void Graph::quickSort(int arr[], int start, int end) {
     // base case
     if (start >= end)
@@ -289,14 +293,4 @@ void Graph::quickSort(int arr[], int start, int end) {
     // Sorting the right part
     quickSort(arr, p + 1, end);
 }
-
- /*
-  * void Graph::addEdge(int src, int dest, int weight) {
-    arr[src].addEdge(dest,weight);
-    arr[dest].addEdge(src, weight);
-}
-  */
-
-
-
-
+*/

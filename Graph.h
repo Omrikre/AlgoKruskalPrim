@@ -21,6 +21,8 @@ public: // methods:
     void removeEdge(int src, int dest);
 
     void getDataFromFile(string fileName);
+    int getVertSize() const;
+    int getEdgeSize() const;
 
 
 private:
