@@ -23,12 +23,15 @@ public: // methods:
     void getDataFromFile(string fileName);
     int getVertSize() const;
     int getEdgeSize() const;
+    void setVertSize(int size) { vertSize = size; }
+    void setEdgeSize(int size) { edgeSize = size; }
+
 
 
 private:
     void checkIfVertInGraph();
     void setArray();
-    bool isCycle(Graph *graph);
+    bool isCycle(Graph* graph);
 
 private: // members:
     int vertSize, edgeSize;
@@ -37,3 +40,4 @@ private: // members:
 
 };
 
+#endif

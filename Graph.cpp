@@ -1,7 +1,7 @@
 //
 // Created by Omrik on 4/5/2022.
 //
-
+#define _CRT_SECURE_NO_WARNINGS
 #include "Graph.h"
 Graph::Graph() {}
 
@@ -17,7 +17,7 @@ void Graph::getDataFromFile(string fileName) {
     dataFile >> vertNum;
     dataFile >> edgeNum;
 
-    if((vertNum < 1 || edgeNum < 1)) {
+    if ((vertNum < 1 || edgeNum < 1)) {
         cout << endl << "Invalid input" << endl << endl;
         exit(1);
     }
@@ -37,7 +37,7 @@ void Graph::getDataFromFile(string fileName) {
     for (int i = 0; i < (int)edgeNum; ++i) {
         dataFile >> tempLine;
         sscanf(tempLine.c_str(), "%d %d %d", &fromVert, &toVert, &edgeWeight);
-        if(fromVert<0 || fromVert>vertSize || toVert<0 || toVert>vertSize) {
+        if (fromVert<0 || fromVert>vertSize || toVert<0 || toVert>vertSize) {
             cout << endl << "Invalid input" << endl << endl;
             exit(1);
         }
@@ -54,7 +54,7 @@ void Graph::getDataFromFile(string fileName) {
 }
 
 void Graph::makeEmptyGraph(int vertSize) {
-   this->vertArr = new Vert[vertSize];
+    this->vertArr = new Vert[vertSize];
     for (int i = 1; i <= vertSize; ++i) {
         this->vertArr[i].setVertName(i);
         this->vertArr[i].setEdgeList();
@@ -63,19 +63,19 @@ void Graph::makeEmptyGraph(int vertSize) {
 
 void Graph::addEdge(int src, int dest, int weight) {
     Edge* newEdge = new Edge(src, dest, weight);
-    this->vertArr[src-1].addEdgeToList(newEdge);
+    this->vertArr[src - 1].addEdgeToList(newEdge);
 }
 
 Edge* Graph::getAdjList(int vertName) {
-    if (vertName>vertSize || vertName<1) {
+    if (vertName > vertSize || vertName < 1) {
         cout << endl << "Invalid input" << endl << endl;
         return nullptr;
     }
-    return vertArr[vertName-1].getEdgeList();
+    return vertArr[vertName - 1].getEdgeList();
 }
 
 void Graph::removeEdge(int src, int dest) {
-    if (src>vertSize || src<1 || dest>vertSize || dest<1) {
+    if (src > vertSize || src<1 || dest>vertSize || dest < 1) {
         cout << endl << "Invalid input" << endl << endl;
         return;
     }
@@ -84,13 +84,13 @@ void Graph::removeEdge(int src, int dest) {
     Edge* prevEdge = nullptr;
     bool edgeFound = false;
 
-    while(!edgeFound) {
+    while (!edgeFound) {
         if (currEdge != nullptr) {
             if (currEdge->getDest() == dest)
                 edgeFound = true;
             else
                 prevEdge = currEdge;
-                currEdge = currEdge->getNextEdge();
+            currEdge = currEdge->getNextEdge();
         }
         else {
             cout << "Edge to remove doesnt exist" << endl;
@@ -98,7 +98,7 @@ void Graph::removeEdge(int src, int dest) {
         }
     }
     if (prevEdge == nullptr) {
-        vertArr[src-1].setEdgeList(currEdge->getNextEdge());
+        vertArr[src - 1].setEdgeList(currEdge->getNextEdge());
         free(currEdge);
     }
     else {
@@ -112,7 +112,7 @@ void Graph::removeEdge(int src, int dest) {
     prevEdge = nullptr;
     edgeFound = false;
 
-    while(!edgeFound) {
+    while (!edgeFound) {
         if (currEdge != nullptr) {
             if (currEdge->getDest() == src)
                 edgeFound = true;
@@ -126,7 +126,7 @@ void Graph::removeEdge(int src, int dest) {
         }
     }
     if (prevEdge == nullptr) {
-        vertArr[dest-1].setEdgeList(currEdge->getNextEdge());
+        vertArr[dest - 1].setEdgeList(currEdge->getNextEdge());
         free(currEdge);
     }
     else {
@@ -138,7 +138,7 @@ void Graph::removeEdge(int src, int dest) {
 bool Graph::isAdjacent(int src, int dest) {
     Edge* currEdge = vertArr[src - 1].getEdgeList();
 
-    while(currEdge != nullptr) {
+    while (currEdge != nullptr) {
         if (currEdge->getDest() == dest)
             return true;
         else
@@ -166,20 +166,16 @@ int Graph::getEdgeSize() const { return edgeSize; }
 int isCycle() {
     // Allocate memory for creating V subsets
     int* parent = new int[graph->V * sizeof(int)];
-
     // Initialize all subsets as single element sets
     memset(parent, -1, sizeof(int) * graph->V);
-
     // Iterate through all edges of graph, find subset of
     // both vertices of every edge, if both subsets are
     // same, then there is cycle in graph.
     for (int i = 0; i < graph->E; ++i) {
         int x = find(parent, graph->edge[i].src);
         int y = find(parent, graph->edge[i].dest);
-
         if (x == y)
             return 1;
-
         Union(parent, x, y);
     }
     return 0;
@@ -201,7 +197,6 @@ Graph::List Graph::getAdjList(int src) {
 void Graph::removeEdge(int src, int dest) {
     arr[src].removeEdge(dest);
     arr[dest].removeEdge(src);
-
 }
 void Graph::List::removeEdge(int dest){
     Node* n =head;
@@ -248,48 +243,37 @@ void Graph::List::removeEdge(int dest){
 }
 int Graph::partition(int arr[], int start, int end) {
     int pivot = arr[start];
-
     int count = 0;
     for (int i = start + 1; i <= end; i++) {
         if (arr[i] <= pivot)
             count++;
     }
-
     // Giving pivot element its correct position
     int pivotIndex = start + count;
     swap(arr[pivotIndex], arr[start]);
-
     // Sorting left and right parts of the pivot element
     int i = start, j = end;
-
     while (i < pivotIndex && j > pivotIndex) {
-
         while (arr[i] <= pivot) {
             i++;
         }
-
         while (arr[j] > pivot) {
             j--;
         }
-
         if (i < pivotIndex && j > pivotIndex) {
             swap(arr[i++], arr[j--]);
         }
     }
-
     return pivotIndex;
 }
 void Graph::quickSort(int arr[], int start, int end) {
     // base case
     if (start >= end)
         return;
-
     // partitioning the array
     int p = partition(arr, start, end);
-
     // Sorting the left part
     quickSort(arr, start, p - 1);
-
     // Sorting the right part
     quickSort(arr, p + 1, end);
 }
