@@ -5,7 +5,7 @@
 #ifndef UNTITLED_KRUSKAL_H
 #define UNTITLED_KRUSKAL_H
 
-#include "Graph.h"
+#include "../Graph/Graph.h"
 
 
 class Kruskal {

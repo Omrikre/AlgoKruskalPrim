@@ -3,7 +3,7 @@
 //
 
 #include "Kruskal.h"
-
+/*
 int Kruskal::calcMin() {
 
 }
@@ -46,4 +46,4 @@ int Kruskal::kruskalMST()
     }
 
     return mst_wt;
-}
+    */

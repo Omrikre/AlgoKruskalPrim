@@ -5,7 +5,7 @@
 #ifndef UNTITLED_EDGELIST_H
 #define UNTITLED_EDGELIST_H
 
-#include "../Edge.h"
+#include "../Graph/Edge.h"
 
 struct edgeNode {
     edgeNode(Edge edge) : edge(edge) {}
