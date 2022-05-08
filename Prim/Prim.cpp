@@ -3,7 +3,6 @@
 //
 
 #include "Prim.h"
-#include "MinHeap.h"
 
 
 // A utility function to find the vertex with
@@ -14,22 +13,22 @@ int Prim::primCalc(Graph g)
 {
 	int sum = 0;
 	int count = 0;
-	MinHeap heap(g.getVertSize());
+	MinHeap heap(g.getSize());
 	int dest = 0;
 	int weight = 0;
-	Edge* n = g.getAdjList(1);
+	Graph::List::Node* n = g.getAdjList(1).getHead();
 	while (n != nullptr) {
 		heap.DecreaseKey(n->getDest(), n->getWeight());
-		n = n->getNextEdge();
+		n->getNext();
 	}
 	Pair* p = heap.DeleteMin();
 	count++;
 	sum += p->getPriority();
-	while (count != g.getVertSize() - 1) {
-		Edge* n = g.getAdjList(1);
+	while (count != g.getSize() - 1) {
+		Graph::List::Node* n = g.getAdjList(p->getValue()).getHead();
 		while (n != nullptr) {
 			heap.DecreaseKey(n->getDest(), n->getWeight());
-			n = n->getNextEdge();
+			n->getNext();
 		}
 		Pair* p = heap.DeleteMin();
 		count++;
