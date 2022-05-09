@@ -19,13 +19,13 @@ public: // methods:
     Edge* getAdjList(int vertName);
     void addEdge(int src, int dest, int weight);
     void removeEdge(int src, int dest);
-
+    void print();
     void getDataFromFile(string fileName);
     int getVertSize() const;
     int getEdgeSize() const;
     void setVertSize(int size) { vertSize = size; }
     void setEdgeSize(int size) { edgeSize = size; }
-
+    ~Graph();
 
 
 private:

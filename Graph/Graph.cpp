@@ -35,7 +35,7 @@ void Graph::getDataFromFile(string fileName) {
     cout << "Edges:" << endl;
 
     for (int i = 0; i < (int)edgeNum; ++i) {
-        dataFile >> tempLine;
+        //dataFile >> tempLine;
         sscanf(tempLine.c_str(), "%d %d %d", &fromVert, &toVert, &edgeWeight);
         if (fromVert<0 || fromVert>vertSize || toVert<0 || toVert>vertSize) {
             cout << endl << "Invalid input" << endl << endl;
@@ -47,7 +47,7 @@ void Graph::getDataFromFile(string fileName) {
         addEdge(fromVert, toVert, edgeWeight);
         addEdge(toVert, fromVert, edgeWeight);
     }
-    dataFile >> tempLine;
+    //dataFile >> tempLine;
     sscanf(tempLine.c_str(), "%d %d", &fromVert, &toVert);
     this->edgeToRemove = new Edge(fromVert, toVert, 0);
     dataFile.close();
@@ -56,8 +56,9 @@ void Graph::getDataFromFile(string fileName) {
 void Graph::makeEmptyGraph(int vertSize) {
     this->vertArr = new Vert[vertSize];
     for (int i = 1; i <= vertSize; ++i) {
-        this->vertArr[i].setVertName(i);
-        this->vertArr[i].setEdgeList();
+        this->vertArr[i - 1] = Vert();
+        this->vertArr[i-1].setVertName(i);
+        this->vertArr[i-1].setEdgeList();
     }
 }
 
@@ -151,6 +152,30 @@ int Graph::getVertSize() const { return vertSize; }
 
 int Graph::getEdgeSize() const { return edgeSize; }
 
+Graph::~Graph(){
+    for (int i = 0;i < vertSize;i++) {
+        Edge* n = vertArr[1].getEdgeList();
+        n = n->getNextEdge();
+        Edge* temp = vertArr[1].getEdgeList();
+        while (n != nullptr) {
+            delete temp;
+            Edge* temp = n;
+            n = n->getNextEdge();
+        }
+        delete temp;
+    }
+}
+
+void Graph::print() {
+    Edge* n = nullptr;
+    for (int i = 1;i <= vertSize;i++) {
+        n = vertArr[i].getEdgeList();
+        while (n != nullptr) {
+            cout << "edge checked:" << n->getDest() << " // " << n->getSource() << "\n";
+            n = n->getNextEdge();
+        }
+    }
+}
 
 
 
