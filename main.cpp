@@ -1,5 +1,17 @@
-#include <iostream>
-#include <fstream>
+
+/*TODO
+ * print output to file - argv[2]
+ * free all data
+ * d'tors
+ * kruskal
+ * union find - array
+ * check all input cases
+ * documentation
+ * check if run in VScode 2019
+ */
+
+
+
 #include "Graph/Graph.h"
 using namespace std;
 
