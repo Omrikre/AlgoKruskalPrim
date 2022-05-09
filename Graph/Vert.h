@@ -21,9 +21,12 @@ public:
             edgeList = newEdge;
         else {
             Edge* tempPointer = edgeList;
-            while (tempPointer != nullptr)
+            Edge* preb = nullptr;
+            while (tempPointer != nullptr) {
+                preb = tempPointer;
                 tempPointer = tempPointer->getNextEdge();
-            tempPointer = newEdge;
+            }   
+            preb->setNextEdge(newEdge);
         }
     }
 
