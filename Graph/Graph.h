@@ -23,20 +23,16 @@ public: // methods:
     void getDataFromFile(string fileName);
     int getVertSize() const;
     int getEdgeSize() const;
+    Edge* getEdgeList() { return this->edgeList; }
     void setVertSize(int size) { vertSize = size; }
     void setEdgeSize(int size) { edgeSize = size; }
     ~Graph();
 
-
-private:
-    void checkIfVertInGraph();
-    void setArray();
-    bool isCycle(Graph* graph);
-
 private: // members:
-    int vertSize, edgeSize;
+    int vertSize, edgeSize, edgeListSize;
     Vert* vertArr;
     Edge* edgeToRemove;
+    Edge** edgeList; //TODO - init in ctor check if works good
 
 };
 

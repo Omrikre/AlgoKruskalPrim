@@ -9,15 +9,14 @@ UnionFind::UnionFind(Graph* graph) {
     auto arr = new Element[vertSize];
     this->setsArr = arr;
 
-    for (int i = 0; i < vertSize; ++i) {
-        this->setsArr[i].parent = -1;   // set parent
-        this->setsArr[i].size = 0;    // set size
+    for (int i = 1; i <= vertSize; ++i) {
+        makeSet(i);
     }
 }
 
 void UnionFind::makeSet(int vertName) {
-    this->setsArr[vertName-1].parent = vertName-1;
-    this->setsArr[vertName].size = 1;
+    this->setsArr[vertName-1].parent = vertName;     // set parent
+    this->setsArr[vertName].size = 1;                // set size
 }
 
 int UnionFind::find(int vertName) {
@@ -29,7 +28,7 @@ int UnionFind::find(int vertName) {
 
 void UnionFind::unionSets(int vert1, int vert2) {
     // union by size
-    if (setsArr[vert1-1].size > setsArr[vert1-2].size) {
+    if (setsArr[vert1-1].size > setsArr[vert2-1].size) {
         setsArr[vert2-1].parent = vert1;
         setsArr[vert1-1].size += setsArr[vert2-1].size;
     }

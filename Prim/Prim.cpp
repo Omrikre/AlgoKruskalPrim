@@ -3,6 +3,7 @@
 //
 
 #include "Prim.h"
+#include "../Graph/Graph.h"
 
 
 // A utility function to find the vertex with

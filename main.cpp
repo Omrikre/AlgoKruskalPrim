@@ -8,6 +8,12 @@
  * check all input cases
  * documentation
  * check if run in VScode 2019
+ * check quickSort - if need graph size -1
+ * fix all TODOs
+ * fix Prim - works with the old graph (list...)
+ * use getDataFromFile
+ * check if to add to edgeList (in Graph) both sides of the edge
+ * while remove edge, delete it also from the list
  */
 
 

@@ -34,6 +34,8 @@ void Graph::getDataFromFile(string fileName) {
     cout << "Num of edges: " << edgeNum << endl << endl;
     cout << "Edges:" << endl;
 
+    this->edgeListSize = 0;
+
     for (int i = 0; i < (int)edgeNum; ++i) {
         //dataFile >> tempLine;
         sscanf(tempLine.c_str(), "%d %d %d", &fromVert, &toVert, &edgeWeight);
@@ -55,6 +57,7 @@ void Graph::getDataFromFile(string fileName) {
 
 void Graph::makeEmptyGraph(int vertSize) {
     this->vertArr = new Vert[vertSize];
+    this->edgeList = new Edge*[edgeSize];
     for (int i = 1; i <= vertSize; ++i) {
         this->vertArr[i - 1] = Vert();
         this->vertArr[i-1].setVertName(i);
@@ -65,6 +68,8 @@ void Graph::makeEmptyGraph(int vertSize) {
 void Graph::addEdge(int src, int dest, int weight) {
     Edge* newEdge = new Edge(src, dest, weight);
     this->vertArr[src - 1].addEdgeToList(newEdge);
+    this->edgeList[edgeListSize] = newEdge;
+    this->edgeListSize += 1;
 }
 
 Edge* Graph::getAdjList(int vertName) {
@@ -134,6 +139,9 @@ void Graph::removeEdge(int src, int dest) {
         prevEdge->setNextEdge(currEdge->getNextEdge());
         free(currEdge);
     }
+
+    this->edgeSize -= 1;
+    this->edgeListSize -= 1;
 }
 
 bool Graph::isAdjacent(int src, int dest) {
@@ -187,6 +195,11 @@ void Graph::print() {
 
 
 
+
+
+
+
+//TODO - Delete
 /*
 int isCycle() {
     // Allocate memory for creating V subsets

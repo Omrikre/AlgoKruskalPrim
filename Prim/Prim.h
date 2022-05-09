@@ -4,8 +4,8 @@
 
 #ifndef UNTITLED_PRIM_H
 #define UNTITLED_PRIM_H
-#include "Graph.h"
 #include "MinHeap.h"
+#include "../Graph/Graph.h"
 
 using namespace std;
 
