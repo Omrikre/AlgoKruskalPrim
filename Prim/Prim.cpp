@@ -3,37 +3,54 @@
 //
 
 #include "Prim.h"
-#include "../Graph/Graph.h"
 
 
 // A utility function to find the vertex with
 // minimum key value, from the set of vertices
 // not yet included in MST
-
-int Prim::primCalc(Graph g)
+int Prim::primCalc(Graph& g)
 {
+	cout << "start\n";
 	int sum = 0;
 	int count = 0;
-	MinHeap heap(g.getSize());
-	int dest = 0;
-	int weight = 0;
-	Graph::List::Node* n = g.getAdjList(1).getHead();
+	size = g.getVertSize();
+	arr = new bool(size+1);
+	setArr();
+	arr[1] = true;
+	MinHeap heap(g.getVertSize());
+	heap.DeleteMin();
+	Edge* n = g.getAdjList(1);
 	while (n != nullptr) {
-		heap.DecreaseKey(n->getDest(), n->getWeight());
-		n->getNext();
+		heap.DecreaseKey(n->getDest(),n->getSource(), n->getWeight());
+		n = n->getNextEdge();
 	}
 	Pair* p = heap.DeleteMin();
+	//heap.print();
 	count++;
 	sum += p->getPriority();
-	while (count != g.getSize() - 1) {
-		Graph::List::Node* n = g.getAdjList(p->getValue()).getHead();
-		while (n != nullptr) {
-			heap.DecreaseKey(n->getDest(), n->getWeight());
-			n->getNext();
+	while (count != g.getVertSize() - 1) {
+		if (!arr[p->getDest()]) {
+			n = g.getAdjList(p->getDest());
 		}
-		Pair* p = heap.DeleteMin();
+		else {
+			int temp = p->getValue();
+			n = g.getAdjList(p->getValue());
+		}
+		while (n != nullptr) {
+			if (!arr[(n->getDest())] && !arr[(n->getSource())]) {
+				heap.DecreaseKey(n->getDest(), n->getSource(), n->getWeight());
+			}
+			n = n->getNextEdge();
+		}
+		arr[p->getValue()] = true;
+		arr[p->getDest()] = true;
+		p = heap.DeleteMin();
+		//heap.print();
 		count++;
 		sum += p->getPriority();
 	}
 	return sum;
 }
+
+
+
