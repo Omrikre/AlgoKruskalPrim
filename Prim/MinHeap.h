@@ -16,5 +16,6 @@ public:
     void insertKey(Pair* k);
     void swap(Pair* x, Pair* y);
     void deletePairByIndex(int ind);
-    void DecreaseKey(int key, int newPri);
+    void DecreaseKey(int key,int key2, int newPri);
+    void print();
 };

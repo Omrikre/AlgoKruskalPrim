@@ -5,10 +5,10 @@ MinHeap::MinHeap(int arrSize) {
     maxSize = arrSize;
     currSize = arrSize;
     array = new Pair*[arrSize];
-    for (int i = 1; i <= arrSize-1; i++) {
-        array[i]->setValue(i+1);
-        array[i]->setPri(INT_MAX);
+    for (int i = 0; i < arrSize; i++) {
+        array[i] = new Pair(INT_MAX,i+1);
         array[i]->setIndex(i);
+        array[i]->setDest(0);
     }
 }
 void MinHeap::insertKey(Pair* k) {
@@ -42,6 +42,7 @@ Pair* MinHeap::DeleteMin() {
     swap(array[currSize - 1], array[0]);
     array[currSize - 1] = nullptr;
     currSize--;
+    array[0]->setIndex(0);
 
     fixHeap(0);
 
@@ -53,11 +54,11 @@ void MinHeap::fixHeap(int curr) {
     int smallest = curr;
 
     if (!(array[l] == nullptr)) {
-        if (l < currSize && array[l]->getPriority()> array[curr]->getPriority())
+        if (l < currSize && array[l]->getPriority()< array[curr]->getPriority())
             smallest = l;
     }
     if (!(array[r] == nullptr)) {
-        if (r < currSize && array[r]->getPriority() > array[smallest]->getPriority())
+        if (r < currSize && array[r]->getPriority() < array[smallest]->getPriority())
             smallest = r;
     }
     if (smallest != curr) {
@@ -66,9 +67,13 @@ void MinHeap::fixHeap(int curr) {
     }
 }
 void MinHeap::swap(Pair* x, Pair* y) {
-    
-    array[x->getIndex()] = y;
-    array[y->getIndex()] = x;
+    int i1 = x->getIndex();
+    int i2 = y->getIndex();
+    array[i1] = y;
+    array[i1]->setIndex(i1);
+    array[i2] = x;
+    array[i2]->setIndex(i2);
+
    
 }
 void MinHeap::deletePairByIndex(int ind) {
@@ -79,16 +84,32 @@ void MinHeap::deletePairByIndex(int ind) {
     fixHeap(ind);
 }
 
-void MinHeap::DecreaseKey(int key, int newPri){
-    for (int i = i;i < currSize;i++) {
-        if (array[i]->getValue() == key) {
-            if (array[i]->getPriority() > newPri) {
+void MinHeap::DecreaseKey(int key,int key2, int newPri){
+    for (int i = 0;i < currSize;i++) {
+        if (array[i]->getValue() == key|| array[i]->getValue() == key2) {
+            if (array[i]->getPriority() > newPri&& array[i]->getValue() == key) {
                 array[i]->setPri(newPri);
+                array[i]->setDest(key2);
                 fixInsert(i);
+                return;
             }
-            return;
+            else if (array[i]->getPriority() > newPri && array[i]->getValue() == key2) {
+                array[i]->setPri(newPri);
+                array[i]->setDest(key);
+                fixInsert(i);
+
+            }
         }
     }
+}
+
+void MinHeap::print() {
+    for (int i = 0;i < currSize;i++) {
+        cout << array[i]->getIndex() << " // " << array[i]->getPriority() << " // " << array[i]->getValue() << " // " << array[i]->getDest()<<"\n";
+
+    }
+    cout<< "space\n";
+    
 }
 
 
