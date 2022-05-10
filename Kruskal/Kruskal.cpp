@@ -10,16 +10,16 @@
 int Kruskal(Graph* graph) {
     int res = 0;
     UnionFind uFind = UnionFind(graph);
-    Edge* edgeLsrPtr = graph->getEdgeList();
+    Edge** edgeLsrPtr = graph->getEdgeList();
     int edgeLstSize = graph->getEdgeSize();
     quickSort(edgeLsrPtr, 0, graph->getVertSize()-1);
 
     int parentSour, parentDest;
     for (int i = 0; i < edgeLstSize; ++i) {
-        parentSour = uFind.find(edgeLsrPtr[i].getSource());
-        parentDest = uFind.find(edgeLsrPtr[i].getDest());
+        parentSour = uFind.find(edgeLsrPtr[i]->getSource());
+        parentDest = uFind.find(edgeLsrPtr[i]->getDest());
         if(parentSour != parentDest) {
-            res += edgeLsrPtr[i].getWeight();
+            res += edgeLsrPtr[i]->getWeight();
             uFind.unionSets(parentSour, parentDest);
         }
     }

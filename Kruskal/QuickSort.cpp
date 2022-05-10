@@ -7,12 +7,12 @@
 
 using namespace std;
 
-int partition(Edge arr[], int start, int end) {
-    Edge pivot = arr[start];
+int partition(Edge** arr, int start, int end) {
+    Edge* pivot = arr[start];
     int count = 0;
 
     for (int i = start + 1; i <= end; i++) {
-        if (arr[i].getWeight() <= pivot.getWeight())
+        if (arr[i]->getWeight() <= pivot->getWeight())
             count++;
     }
 
@@ -24,10 +24,10 @@ int partition(Edge arr[], int start, int end) {
     int i = start, j = end;
 
     while (i < pivotIndex && j > pivotIndex) {
-        while (arr[i].getWeight() <= pivot.getWeight())
+        while (arr[i]->getWeight() <= pivot->getWeight())
             i++;
 
-        while (arr[j].getWeight() > pivot.getWeight())
+        while (arr[j]->getWeight() > pivot->getWeight())
             j--;
         if (i < pivotIndex && j > pivotIndex)
             swap(arr[i++], arr[j--]);
@@ -36,7 +36,7 @@ int partition(Edge arr[], int start, int end) {
     return pivotIndex;
 }
 
-void quickSort(Edge arr[], int start, int end) {
+void quickSort(Edge** arr, int start, int end) {
     // base case
     if (start >= end)
         return;

@@ -23,7 +23,7 @@ public: // methods:
     void getDataFromFile(string fileName);
     int getVertSize() const;
     int getEdgeSize() const;
-    Edge* getEdgeList() { return this->edgeList; }
+    Edge** getEdgeList() { return this->edgeList; }
     void setVertSize(int size) { vertSize = size; }
     void setEdgeSize(int size) { edgeSize = size; }
     ~Graph();
