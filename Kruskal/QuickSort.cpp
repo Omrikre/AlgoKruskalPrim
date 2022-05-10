@@ -2,8 +2,9 @@
 // Created by Omrik on 5/7/2022.
 //
 
+
 #include <iostream>
-#include "../Graph/Edge.h"
+#include "QuickSort.h"
 
 using namespace std;
 

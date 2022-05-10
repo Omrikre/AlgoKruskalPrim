@@ -5,14 +5,15 @@
 
 #include "../Graph/Graph.h"
 #include "UnionFind.h"
-#include "QuickSort.cpp"
+#include "QuickSort.h"
 
 int Kruskal(Graph* graph) {
     int res = 0;
     UnionFind uFind = UnionFind(graph);
     Edge** edgeLsrPtr = graph->getEdgeList();
     int edgeLstSize = graph->getEdgeSize();
-    quickSort(edgeLsrPtr, 0, graph->getVertSize()-1);
+    QuickSort qSort;
+//    qSort.quickSort(edgeLsrPtr, 0, graph->getVertSize()-1);
 
     int parentSour, parentDest;
     for (int i = 0; i < edgeLstSize; ++i) {

@@ -10,6 +10,7 @@ private:
 public:
     MinHeap(int arrSize);
     MinHeap() {}
+    ~MinHeap() {}
 
     Pair* GetMin() { return array[0]; } // Returns the max key (key at root) from min heap
     Pair* DeleteMin();
