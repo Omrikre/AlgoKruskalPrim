@@ -14,16 +14,15 @@ using namespace std;
 
 class Prim {
 public:
-    bool* arr;
-    int size;
-    int primCalc(Graph& g);
+	bool* arr;
+	int size;
+	int primCalc(Graph& g);
 	void setArr() {
-		for (int i = 0;i < size;i++) {
+		for (int i = 0; i < size; i++) {
 			arr[i] = false;
 		}
 	};
-}
+};
 
-#endif //UNTITLED_PRIM_H
+#endif UNTITLED_PRIM_H
 
-;

@@ -1,60 +1,61 @@
 
-/*TODO
- * print output to file - argv[2]
- * free all data
- * d'tors
- * kruskal
- * union find - array
- * check all input cases
- * documentation
- * check if run in VScode 2019
- * check quickSort - if need graph size -1
- * fix all TODOs
- * fix Prim - works with the old graph (list...)
- * use getDataFromFile
- * check if to add to edgeList (in Graph) both sides of the edge
- * while remove edge, delete it also from the list
+/*
+ * Omri Krelman 205800378
+ * Nov Israeli 316428358
+ * 
  */
 
 
 
 #include "Graph/Graph.h"
+#include "Prim/Prim.h"
+#include "Kruskal/Kruskal.h"
 
 using namespace std;
 
+void printToScreen(int firstKruskal, int secondKruskal, int prim) {
+    // prints to console 
+    printf("Prim %d\n", prim);
+    printf("Kruskal %d\n", firstKruskal);
+    printf("Kruskal %d\n", secondKruskal);
+
+}
+
+void printToFile(int firstKruskal, int secondKruskal, int prim, string fileName) {
+    // print to file
+    ofstream outputFile;
+    outputFile.open(fileName);
+    outputFile << "Prim " << prim << endl;
+    outputFile << "Kruskal " << firstKruskal << endl;
+    outputFile << "Kruskal " << secondKruskal << endl;
+    outputFile.close();
+}
+
 int main(int argc, char *argv[]) {
     Graph g;
-    int vertsize = 6;
-    int edgeSize = 9;
-    g.makeEmptyGraph(vertsize);
-    g.setEdgeSize(edgeSize);
-    g.setVertSize(vertsize);
-    g.addEdge(1, 2, 16);
-    g.addEdge(1, 3, 13);
-    g.addEdge(2, 3, 10);
-    g.addEdge(2, 4, 12);
-    g.addEdge(4, 3, 9);
-    g.addEdge(3, 5, 14);
-    g.addEdge(4,5,7);
-    g.addEdge(5,6, 4);
-    g.addEdge(4, 6, 20);
+    Prim prim;
+    int primRes, kruskalRes, kruskalResAfterRemove;
+    string outputFikeName = argv[2];
+    g.getDataFromFile(argv[1], outputFikeName);
+    primRes = prim.primCalc(g);                 // Prim
+    kruskalRes = Kruskal(&g);                   // kruskal - first
+    g.removeEdgeFromTheFile();                  // remove the edge
+    if (!g.checkIfConnected()) {
+        cout << endl << "Invalid input" << endl << endl;
+        ofstream outputFile;
+        outputFile.open(argv[2]);
+        outputFile << "invalid input";
+        outputFile.close();
+        exit(1);
+    }
+    kruskalResAfterRemove = Kruskal(&g);        // Kruskal - after remove
 
-    /*
-    6
-9
-1 2 16
-1 3 13
-2 3 10
-2 4 12
-4 3 9
-3 5 14
-5 4 7
-5 6 4
-4 6 20
-1 3
-    */
-    // run kruskel
-    // run 
+    printToScreen(kruskalRes, kruskalResAfterRemove, primRes);
+    printToFile(kruskalRes, kruskalResAfterRemove, primRes, outputFikeName);
+
+
+
 }
+
 
 

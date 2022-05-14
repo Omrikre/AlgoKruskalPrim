@@ -16,11 +16,11 @@ UnionFind::UnionFind(Graph* graph) {
 
 void UnionFind::makeSet(int vertName) {
     this->setsArr[vertName-1].parent = vertName;     // set parent
-    this->setsArr[vertName].size = 1;                // set size
+    this->setsArr[vertName-1].size = 1;                // set size
 }
 
 int UnionFind::find(int vertName) {
-    if(setsArr[vertName-1].parent == vertName-1)
+    if(setsArr[vertName-1].parent == vertName)
         return vertName;
     else // shrink paths
         return (setsArr[vertName-1].parent = find(setsArr[vertName-1].parent));

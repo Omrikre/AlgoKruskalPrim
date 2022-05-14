@@ -9,7 +9,6 @@
 #include "../Graph/Edge.h"
 #include "../Graph/Graph.h"
 
-//TODO - כיווץ מסלולים
 
 typedef struct {
     int parent;
@@ -32,4 +31,4 @@ public:
 };
 
 
-#endif //UNTITLED_UNIONFIND_H
+#endif UNTITLED_UNIONFIND_H

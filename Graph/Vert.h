@@ -36,4 +36,4 @@ private: // members:
 };
 
 
-#endif //UNTITLED_VERT_H
+#endif UNTITLED_VERT_H

@@ -97,7 +97,6 @@ void MinHeap::DecreaseKey(int key,int key2, int newPri){
                 array[i]->setPri(newPri);
                 array[i]->setDest(key);
                 fixInsert(i);
-
             }
         }
     }

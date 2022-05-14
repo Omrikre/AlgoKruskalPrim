@@ -13,7 +13,7 @@ private:
 public:
     // ctor:
     Edge();
-    Edge(int source, int dest, int weight) : sourceEdge(sourceEdge), destEdge(dest), weight(weight) {
+    Edge(int source, int dest, int weight) : sourceEdge(source), destEdge(dest), weight(weight) {
         nextEdge = nullptr;
     }
 
